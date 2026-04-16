@@ -76,3 +76,11 @@ ipcMain.handle('new-note', async (event) => {
     // result.response=== 0 means user clicked 'Discard Changes'
     return { confirmed: result.response === 0 };
 });
+
+// UPDATED: Smart Save handler
+ipcMain.handle('smart-save',async (event,text,filepath) => {
+    const targetPath = filepath || path.join(app.getPath('documents'), 'quicknote.txt');
+    fs.writeFileSync (targetPath || text, 'utf-8');
+return { success: true, filePath: targetPath };
+});
+
